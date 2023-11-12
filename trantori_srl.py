@@ -16,21 +16,25 @@
 import json
 import os
 
+datafile = "listaTrantori.json"
 
 
 def trantori_management_extraordinaire():
     action = None
-    options = {"angajare": "A", "concediere": "C", "listare": "L"}
-    while action not in options.values():
-        action = input(f"Ce facem astazi, sefu?\n {options['angajare']} - Angajam, {options['concediere']} - Concediem, {options['listare']} - Ne uitam la lista?").upper()
-        if action == "A":
+    options = {"angajare": "A", "concediere": "C", "listare": "L", "iesire": "X"}
+    while not action == options["iesire"]:
+        action = input(f"Ce facem astazi, sefu?\n {options['angajare']} - Angajam, {options['concediere']} - Concediem, {options['listare']} - Ne uitam la lista, {options['iesire']} - Inchidem?").upper()
+        if action == options["angajare"]:
             hireTrantor()
-        elif action == "C":
+        elif action == options["concediere"]:
             fireTrantor()
-        elif action == "L":
+        elif action == options["listare"]:
             printAllTrantori()
+        elif action == options["iesire"]:
+            break
         else:
             print("Sefu, se pare ca nu sunteti atent. Nu-i nimic, incercam inca odata.\n")
+
 
 
 def saveTrantorData(outputPath, entry):
@@ -68,7 +72,7 @@ def readTrantorData(inputPath) -> list:
 
 
 def hireTrantor():
-    output = "listaTrantori.json"
+    output = datafile
     name = input("Cum il cheama? ").capitalize()
     family = input("Numele de familie? ").capitalize()
     salary = input("Cat vrea? ")
@@ -77,20 +81,19 @@ def hireTrantor():
     
 
 
-
 def fireTrantor():
-    datafile = "listaTrantori.json"
+    file = datafile
     name = input("cum il cheama? ").capitalize()
     family = input("Numele de familie? ").capitalize()
 
-    removeTrantorData(datafile, (name + " " + family))
+    removeTrantorData(file, (name + " " + family))
 
     print(f"Gata. L-am dat afara pe {name} {family}. Pacat. Era om de treaba")
 
 
 
 def printAllTrantori():
-    listOfTrantors = readTrantorData("listaTrantori.json")
+    listOfTrantors = readTrantorData(datafile)
     for trantor in listOfTrantors:
         print(f"{trantor['name']}{24 * '.'}{trantor['salary']}" )
         print(48*"-")
