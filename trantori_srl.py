@@ -14,6 +14,7 @@
 
 
 import json
+import os
 
 
 
@@ -32,9 +33,12 @@ def trantori_management_extraordinaire():
             print("Sefu, se pare ca nu sunteti atent. Nu-i nimic, incercam inca odata.\n")
 
 
-
-def saveTrantorData(outputPath):
-    pass
+def saveTrantorData(outputPath, entry):
+    listOfTrantori = readTrantorData(outputPath)
+    listOfTrantori.append(entry)
+    file = open(outputPath, "w")
+    file.write(json.dumps(listOfTrantori))
+    file.close()
 
 
 
@@ -43,13 +47,28 @@ def removeTrantorData(outputPath, entry):
 
 
 
-def readTrantorData(inputPath):
-    pass
+def readTrantorData(inputPath) -> list:
+    result = []
+    if os.path.exists(inputPath):
+        file = open(inputPath, "r")
+        content = file.read()
+        if len(content) != 0:
+            trantori = json.loads(content)
+            for x in trantori:
+                result.append(x)
+        file.close()
+    return result
 
 
 
 def hireTrantor():
-    pass
+    output = "listaTrantori.json"
+    name = input("Cum il cheama? ")
+    family = input("Numele de familie? ")
+    salary = input("Cat vrea? ")
+
+    saveTrantorData(output, {"name": name + " " + family, "salary": salary})
+    
 
 
 
