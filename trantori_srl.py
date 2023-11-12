@@ -43,7 +43,13 @@ def saveTrantorData(outputPath, entry):
 
 
 def removeTrantorData(outputPath, entry):
-    pass
+    listOfTrantori = readTrantorData(outputPath)
+    for x in listOfTrantori:
+        if x["name"] == entry:
+            listOfTrantori.remove(x)
+            break
+    with open(outputPath, "w") as file:
+        file.write(json.dumps(listOfTrantori))
 
 
 
@@ -63,8 +69,8 @@ def readTrantorData(inputPath) -> list:
 
 def hireTrantor():
     output = "listaTrantori.json"
-    name = input("Cum il cheama? ")
-    family = input("Numele de familie? ")
+    name = input("Cum il cheama? ").capitalize()
+    family = input("Numele de familie? ").capitalize()
     salary = input("Cat vrea? ")
 
     saveTrantorData(output, {"name": name + " " + family, "salary": salary})
@@ -73,7 +79,13 @@ def hireTrantor():
 
 
 def fireTrantor():
-    pass
+    datafile = "listaTrantori.json"
+    name = input("cum il cheama? ").capitalize()
+    family = input("Numele de familie? ").capitalize()
+
+    removeTrantorData(datafile, (name + " " + family))
+
+    print(f"Gata. L-am dat afara pe {name} {family}. Pacat. Era om de treaba")
 
 
 
