@@ -90,7 +90,10 @@ def fireTrantor():
 
 
 def printAllTrantori():
-    pass
+    listOfTrantors = readTrantorData("listaTrantori.json")
+    for trantor in listOfTrantors:
+        print(f"{trantor['name']}{24 * '.'}{trantor['salary']}" )
+        print(48*"-")
 
 
 
